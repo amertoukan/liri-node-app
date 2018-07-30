@@ -1,8 +1,8 @@
 {
   "name": "liri-node-app",
   "version": "1.0.0",
-  "description": "Language Interpretor and Recognition Interface",
-  "main": "keys.js",
+  "description": "Language Interpretation &amp; Recognition Interface Command Line node app that will take parameters and return data",
+  "main": "liri.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,9 +10,6 @@
     "type": "git",
     "url": "git+https://github.com/amertoukan/liri-node-app.git"
   },
-  "keywords": [
-    "LIRI"
-  ],
   "author": "Amer Toukan",
   "license": "MIT",
   "bugs": {
@@ -21,8 +18,10 @@
   "homepage": "https://github.com/amertoukan/liri-node-app#readme",
   "dependencies": {
     "dotenv": "^6.0.0",
-    "node-spotify-api": "^1.0.7",
+    "fs": "0.0.1-security",
+    "omdb": "^0.8.0",
     "request": "^2.87.0",
+    "spotify": "^0.3.0",
     "twitter": "^1.7.1"
   }
 }
