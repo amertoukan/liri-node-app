@@ -13,6 +13,7 @@ require('dotenv').config();
 var keys = require('./keys.js');
 var twitter = require('twitter');
 var spotify = require('spotify');
+var nodeSpotifyAPI = require ('node-spotify-api');
 var request = require('request');
 var fs = require ('fs'); 
 
@@ -90,10 +91,12 @@ fs.appendFile('./log.txt', 'LIRI RESPONSE:\n\n\n' + outputStr + '\n', function(e
 
 //SPOTIFY FUNCTION
 function spotifyThis(songTitle){
-    //Spotify API 
+//Spotify API 
+
+
     fs.appendFile('./log.txt', 'User Command: node liri.js spotify-this-song'+ songTitle + '/n', (err)=>{
         if (err)
-        {console.log(err)};
+        {console.log("Logging error: "+err)};
     });
 
     //USE DEFAULT SONG
@@ -106,19 +109,16 @@ function spotifyThis(songTitle){
     spotify.search({type: 'track', query: search}, function(err,data){ 
         if(err){
         fs.appendFile('log.txt',"*********************************  ERROR RETRIEVING SPOTIFY TRACK ************************************"+ (JSON.stringify(err)), function(err){ 
-            if (err) {
-                console.log(err)
-        }
+            if (err) throw err;
     });
       return;  
-    } else{
-        console.log(data.tracks)
-        var songInfo = data.tracks.items[0];
+    } else {
+        var songInfo = data;
         if(!songInfo){
                 var errStr = 'ERROR: NO SONG RETRIEVED, please check the spelling of the song and try again!';
 
                 fs.appendFile('./log.txt',errStr, (err) => {
-                    if(err) console.log(err)
+                    if(err) console.log(errStr+err)
                 });
                 return;
         } else {
@@ -126,8 +126,8 @@ function spotifyThis(songTitle){
             'Song Information:\n' + 
             '------------------------\n\n' + 
             'Song Name: ' + songInfo.name + '\n'+ 
-            'Artist: ' + songInfo.artists[0].name + '\n' + 
-            'Album: ' + songInfo.album.name + '\n' + 
+            'Artist: ' + songInfo+ '\n' + 
+            'Album: ' + songInfo + '\n' + 
             'Preview Here: ' + songInfo.preview_url + '\n'
             +'------------------------\n\n\n';
             fs.appendFile('./log.txt', 'LIRI Response:\n\n' + outputStr + '\n', (err) => {
